@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "repairtalisman",
+  "version": "1.0.0",
+  "name": "Repair Talisman",
+  "description": "One craftable talisman that slowly repairs every damaged item in your hotbar, armor and inventory. Standalone: no Fabric API or other library mods needed.",
+  "authors": ["Kyle"],
+  "license": "MIT",
+  "icon": "assets/repairtalisman/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.kyle.repairtalisman.RepairTalismanMod"]
+  },
+  "mixins": ["repairtalisman.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "minecraft": "~26.1",
+    "java": ">=21"
+  }
+}
