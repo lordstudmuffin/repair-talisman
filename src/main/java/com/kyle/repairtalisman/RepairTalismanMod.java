@@ -24,11 +24,23 @@ public final class RepairTalismanMod implements ModInitializer {
             ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, "repair_talisman"));
     public static Item TALISMAN;
 
+    /**
+     * Registers the talisman once. Called from {@code BuiltInRegistriesMixin} right before vanilla
+     * freezes the registries (the only window that exists without Fabric API), and again from
+     * {@link #onInitialize} for the Fabric API case, where the entrypoint runs before the freeze.
+     */
+    public static synchronized void registerItems() {
+        if (TALISMAN != null) {
+            return;
+        }
+        TALISMAN = Registry.register(BuiltInRegistries.ITEM, TALISMAN_KEY,
+                new RepairTalismanItem(new Item.Properties().setId(TALISMAN_KEY).stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+    }
+
     @Override
     public void onInitialize() {
         RepairTalismanConfig.load(FabricLoader.getInstance().getConfigDir().resolve(MOD_ID + ".properties"));
-        TALISMAN = Registry.register(BuiltInRegistries.ITEM, TALISMAN_KEY,
-                new RepairTalismanItem(new Item.Properties().setId(TALISMAN_KEY).stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+        registerItems();
         LOGGER.info("Repair Talisman loaded: repairs {} durability every {} ticks",
                 RepairTalismanConfig.repairAmount, RepairTalismanConfig.intervalTicks);
     }

@@ -34,7 +34,11 @@ public final class TalismanPackSource implements RepositorySource {
 
     @Override
     public void loadPacks(Consumer<Pack> consumer) {
-        Optional<ModContainer> container = FabricLoader.getInstance().getModContainer(RepairTalismanMod.MOD_ID);
+        FabricLoader loader = FabricLoader.getInstance();
+        if (loader.isModLoaded("fabric-resource-loader-v1") || loader.isModLoaded("fabric-resource-loader-v0")) {
+            return; // Fabric API already exposes every mod jar's resources; don't add a second copy
+        }
+        Optional<ModContainer> container = loader.getModContainer(RepairTalismanMod.MOD_ID);
         if (container.isEmpty()) {
             RepairTalismanMod.LOGGER.error("Own mod container not found; recipe and textures will be missing");
             return;

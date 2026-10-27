@@ -47,3 +47,12 @@ Expected link-check noise: nested-class constructors (Pack$Metadata, Item$Proper
   `"compatibilityLevel": "JAVA_21"`, no refmap.
 - Registry sync caveat: without Fabric API nothing syncs numeric registry ids between client and server, so (as with any
   mod) both sides must run the same mod list. If Fabric API is present it syncs them.
+
+## Registry freeze (found 2026-10-27, cost Repair Talisman 1.0.0 a crash)
+`Bootstrap.bootStrap()` calls `BuiltInRegistries.bootStrap()`, which runs `createContents()` and then `freeze()`, BEFORE
+Fabric Loader invokes any `main` entrypoint. Fabric API's registry-sync module redirects that call to `createContents()`
+only and freezes after mod init, which is why every tutorial registers items in `onInitialize`. Without Fabric API that
+throws `IllegalStateException: Registry is already frozen` (and `new Item(..)` fails on `createIntrusiveHolder`). Fix:
+`@Mixin(BuiltInRegistries.class)` + `@Inject(method = "bootStrap", at = @At(value = "INVOKE", target =
+"Lnet/minecraft/core/registries/BuiltInRegistries;freeze()V"))` calling an idempotent `registerItems()`, which the
+entrypoint also calls (so the Fabric API case, where the entrypoint runs first, still works).

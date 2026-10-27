@@ -1,11 +1,11 @@
-# Repair Talisman 1.0.0: test plan (Fabric 26.1.2)
+# Repair Talisman 1.0.1: test plan (Fabric 26.1.2)
 
 Instance: a NEW CurseForge custom profile, Minecraft 26.1.2, loader Fabric (latest 0.18.x). The "Test" instance is
-NeoForge 1.21.1 and cannot load this jar. Only `repairtalisman-1.0.0.jar` goes in `mods`; no Fabric API needed
+NeoForge 1.21.1 and cannot load this jar. Only `repairtalisman-1.0.1.jar` goes in `mods`; no Fabric API needed
 (adding it later is fine).
 
 1. Launch. Log should contain "Repair Talisman loaded: repairs 1 durability every 60 ticks" and no mixin errors
-   (search `latest.log` for `repairtalisman` and `Mixin apply failed`). `config/repairtalisman.properties` exists.
+   (search `latest.log` for `repairtalisman`, `Mixin apply failed` and `already frozen`). `config/repairtalisman.properties` exists.
 2. Creative: the talisman is in Tools & Utilities and in search; it has a texture, name "Repair Talisman", a glint and
    a grey tooltip line with the rate.
 3. Survival crafting: 4 amethyst shards + 4 gold ingots + 1 diamond in the AGA/GDG/AGA shape gives one talisman. Pick
@@ -17,4 +17,5 @@ NeoForge 1.21.1 and cannot load this jar. Only `repairtalisman-1.0.0.jar` goes i
    the talisman itself never takes damage and survives lava.
 6. Multiplayer (optional): same jar on a Fabric 26.1.2 server and client; repair happens server side and the client bar
    updates.
+7. Optional: add Fabric API to `mods` and launch again; everything above still works, with no duplicate pack warnings.
 If step 1 shows a mixin failure, send `latest.log` back to the thread.

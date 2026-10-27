@@ -38,7 +38,7 @@ Edit the file and restart the game. The talisman's tooltip shows the current rat
 ## Installation
 
 1. Install Fabric Loader (0.18 or newer) for Minecraft 26.1.x. Java 25 comes with the launcher.
-2. Put `repairtalisman-1.0.0.jar` in your `mods` folder. That is all.
+2. Put `repairtalisman-1.0.1.jar` in your `mods` folder. That is all.
 
 For servers, install it on both the server and every client, as with any item mod.
 

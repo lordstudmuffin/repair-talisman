@@ -4,6 +4,7 @@
   "package": "com.kyle.repairtalisman.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BuiltInRegistriesMixin",
     "CreativeModeTabMixin",
     "PackRepositoryMixin"
   ],
